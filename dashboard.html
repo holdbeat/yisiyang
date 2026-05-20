@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yisiyang 运营中心 | SEO / GEO / 社媒 / 内容</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1242a8;
+            --primary-light: #e8effc;
+            --accent: #f59e0b;
+            --green: #059669;
+            --green-light: #d1fae5;
+            --red: #dc2626;
+            --red-light: #fee2e2;
+            --purple: #7c3aed;
+            --purple-light: #ede9fe;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+            --radius: 14px;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a56db 0%, #1242a8 60%, #0e2f7a 100%);
+            color: #fff;
+            padding: 40px 24px;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 20px rgba(26,86,219,0.3);
+        }
+        .header-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .header-left h1 { font-size: 24px; font-weight: 700; }
+        .header-left p { opacity: 0.8; font-size: 14px; margin-top: 4px; }
+        .header-right { display: flex; gap: 12px; align-items: center; }
+        .site-badge {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px; border-radius: 8px;
+            font-size: 13px; font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .site-badge a { color: #fff; text-decoration: none; }
+        .site-badge a:hover { text-decoration: underline; }
+
+        /* Progress Bar */
+        .progress-section {
+            max-width: 1200px; margin: -20px auto 0; padding: 0 24px;
+            position: relative; z-index: 101;
+        }
+        .progress-card {
+            background: var(--card); border-radius: var(--radius);
+            padding: 24px 32px; box-shadow: var(--shadow-lg);
+            display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+        }
+        .progress-label { font-weight: 600; font-size: 15px; white-space: nowrap; }
+        .progress-bar-outer {
+            flex: 1; height: 12px; background: #e5e7eb; border-radius: 6px;
+            overflow: hidden; min-width: 200px;
+        }
+        .progress-bar-inner {
+            height: 100%; border-radius: 6px;
+            background: linear-gradient(90deg, var(--green), #34d399);
+            transition: width 0.6s ease;
+        }
+        .progress-num { font-size: 28px; font-weight: 800; color: var(--green); white-space: nowrap; }
+        .progress-num span { font-size: 14px; color: var(--text-light); font-weight: 400; }
+
+        /* Tabs */
+        .tabs {
+            max-width: 1200px; margin: 24px auto 0; padding: 0 24px;
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .tab {
+            padding: 12px 24px; border-radius: 10px 10px 0 0;
+            background: #e5e7eb; color: var(--text-light);
+            font-weight: 600; font-size: 14px; cursor: pointer;
+            border: none; transition: all 0.2s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .tab:hover { background: #d1d5db; }
+        .tab.active {
+            background: var(--card); color: var(--primary);
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+        }
+        .tab-icon { font-size: 18px; }
+        .tab-count {
+            background: var(--primary-light); color: var(--primary);
+            font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 700;
+        }
+        .tab.active .tab-count { background: var(--primary); color: #fff; }
+
+        /* Panel */
+        .panel {
+            max-width: 1200px; margin: 0 auto; padding: 0 24px 40px;
+            background: var(--card); border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: none;
+        }
+        .panel.active { display: block; }
+
+        /* Task Card */
+        .task-group { padding: 28px 32px; }
+        .task-group-title {
+            font-size: 18px; font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+            padding-bottom: 12px; border-bottom: 2px solid var(--border);
+        }
+        .task-group-title .icon { font-size: 22px; }
+
+        .task {
+            display: flex; gap: 16px; padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: flex-start;
+            transition: background 0.2s;
+        }
+        .task:last-child { border-bottom: none; }
+        .task-check {
+            width: 24px; height: 24px; border-radius: 8px;
+            border: 2px solid #d1d5db; cursor: pointer;
+            flex-shrink: 0; margin-top: 2px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; background: #fff;
+        }
+        .task-check:hover { border-color: var(--primary); }
+        .task-check.done {
+            background: var(--green); border-color: var(--green);
+        }
+        .task-check.done::after { content: '✓'; color: #fff; font-size: 14px; font-weight: 700; }
+        .task-content { flex: 1; }
+        .task-content.done-text { opacity: 0.5; }
+        .task-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+        .task-desc { color: var(--text-light); font-size: 13px; line-height: 1.5; }
+        .task-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .task-btn {
+            padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+            cursor: pointer; border: 1px solid var(--border); background: #fff;
+            transition: all 0.2s; text-decoration: none; color: var(--text);
+        }
+        .task-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .task-btn.primary {
+            background: var(--primary); color: #fff; border-color: var(--primary);
+        }
+        .task-btn.primary:hover { background: var(--primary-dark); }
+        .task-btn.green { background: var(--green-light); color: var(--green); border-color: transparent; }
+
+        /* Priority badges */
+        .priority {
+            display: inline-block; font-size: 11px; font-weight: 700;
+            padding: 2px 8px; border-radius: 6px; margin-left: 8px;
+        }
+        .priority.high { background: var(--red-light); color: var(--red); }
+        .priority.medium { background: #fef3c7; color: #d97706; }
+        .priority.low { background: var(--green-light); color: var(--green); }
+
+        /* Code Block */
+        .code-toggle {
+            padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+            cursor: pointer; border: 1px solid var(--border); background: #f9fafb;
+            color: var(--text-light); transition: all 0.2s; margin-top: 8px;
+        }
+        .code-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .code-block {
+            display: none; margin-top: 10px; padding: 16px;
+            background: #1e293b; color: #e2e8f0; border-radius: 10px;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: 12px; line-height: 1.6; overflow-x: auto;
+            position: relative;
+        }
+        .code-block.show { display: block; }
+        .code-block .copy-btn {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(255,255,255,0.1); color: #94a3b8;
+            border: none; padding: 4px 10px; border-radius: 6px;
+            font-size: 11px; cursor: pointer;
+        }
+        .code-block .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+        /* Info Box */
+        .info-box {
+            background: var(--primary-light); border-left: 4px solid var(--primary);
+            padding: 14px 18px; border-radius: 0 10px 10px 0;
+            margin: 12px 0; font-size: 13px; line-height: 1.6;
+        }
+        .info-box.warning {
+            background: #fef3c7; border-left-color: var(--accent);
+        }
+        .info-box.success {
+            background: var(--green-light); border-left-color: var(--green);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px; text-align: center;
+        }
+        .stat-num { font-size: 32px; font-weight: 800; }
+        .stat-num.blue { color: var(--primary); }
+        .stat-num.green { color: var(--green); }
+        .stat-num.amber { color: var(--accent); }
+        .stat-num.purple { color: var(--purple); }
+        .stat-label { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; text-align: center; }
+            .header-right { justify-content: center; }
+            .progress-card { flex-direction: column; text-align: center; }
+            .task-group { padding: 20px 16px; }
+            .tabs { gap: 4px; }
+            .tab { padding: 10px 16px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-inner">
+        <div class="header-left">
+            <h1>🦾 Yisiyang 运营中心</h1>
+            <p>SEO / GEO / 社媒引流 / 内容扩充 — 一步步把流量做起来</p>
+        </div>
+        <div class="header-right">
+            <div class="site-badge">🌐 <a href="https://www.yisiyang.com/" target="_blank">www.yisiyang.com</a></div>
+            <div class="site-badge">📧 start2star@outlook.com</div>
+        </div>
+    </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+    <div class="progress-card">
+        <div class="progress-label">总进度</div>
+        <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div class="progress-num"><span id="progressCount">0</span><span> / <span id="progressTotal">0</span> 项</span></div>
+    </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+    <button class="tab active" data-tab="seo">
+        <span class="tab-icon">🔍</span> SEO 优化
+        <span class="tab-count" id="seoCount">0</span>
+    </button>
+    <button class="tab" data-tab="geo">
+        <span class="tab-icon">🤖</span> GEO 优化
+        <span class="tab-count" id="geoCount">0</span>
+    </button>
+    <button class="tab" data-tab="social">
+        <span class="tab-icon">📢</span> 社媒引流
+        <span class="tab-count" id="socialCount">0</span>
+    </button>
+    <button class="tab" data-tab="content">
+        <span class="tab-icon">📝</span> 内容扩充
+        <span class="tab-count" id="contentCount">0</span>
+    </button>
+</div>
+
+<!-- ==================== SEO PANEL ==================== -->
+<div class="panel active" id="panel-seo">
+    <div class="task-group">
+        <div class="task-group-title"><span class="icon">🔍</span> SEO 优化 — 让 Google 收录你的网站</div>
+
+        <div class="info-box">
+            <strong>目标：</strong>让 yisiyang.com 出现在 Google 搜索结果中，当潜在客户搜索 "3.5mm mono cable manufacturer" 等关键词时能找到你。
+        </div>
+
+        <!-- Task 1: Google Search Console -->
+        <div class="task" data-id="seo-1">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">提交网站到 Google Search Console <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    Google Search Console (GSC) 是让 Google 知道你网站存在的第一步。提交后 Google 会开始爬取和收录你的页面。
+                </div>
+                <div class="task-actions">
+                    <a href="https://search.google.com/search-console/about" target="_blank" class="task-btn primary">打开 GSC</a>
+                    <button class="task-btn" onclick="toggleCode('code-gsc')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-gsc">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>步骤 1：打开 https://search.google.com/search-console
+步骤 2：点击「添加资源」→ 选择「网址前缀」→ 输入 https://www.yisiyang.com
+步骤 3：验证方式选择「HTML 标签」
+        会给你一段类似：
+        &lt;meta name="google-site-verification" content="xxxxx" /&gt;
+步骤 4：把这段 meta 标签加到 index.html 的 &lt;head&gt; 中
+步骤 5：回到 GSC 点击「验证」
+步骤 6：验证成功后，提交 sitemap：
+        左侧菜单 → 站点地图 → 输入 sitemap.xml → 提交
+
+⏱ 收录时间：通常 3-7 天开始收录，1-4 周完全收录
+💡 提示：GSC 还能看到搜索词、点击量、收录状态等数据</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 2: robots.txt -->
+        <div class="task" data-id="seo-2">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">创建 robots.txt <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    robots.txt 告诉搜索引擎爬虫哪些页面可以抓取。已自动生成，将随下次部署一起上线。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                    <button class="task-btn" onclick="toggleCode('code-robots')">查看内容</button>
+                </div>
+                <div class="code-block" id="code-robots">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre># robots.txt for yisiyang.com
+User-agent: *
+Allow: /
+Sitemap: https://www.yisiyang.com/sitemap.xml
+
+# 允许所有搜索引擎抓取全部页面
+# sitemap 位置告知爬虫去哪里找网站地图</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 3: sitemap.xml -->
+        <div class="task" data-id="seo-3">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">创建 sitemap.xml <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    Sitemap 帮助搜索引擎快速发现你网站的所有页面。已自动生成，将随下次部署一起上线。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                    <button class="task-btn" onclick="toggleCode('code-sitemap')">查看内容</button>
+                </div>
+                <div class="code-block" id="code-sitemap">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://www.yisiyang.com/&lt;/loc&gt;
+    &lt;lastmod&gt;2026-05-20&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+    &lt;priority&gt;1.0&lt;/priority&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;
+
+💡 每次添加新产品页面或文章后，都要更新 sitemap
+💡 未来有多个页面时，每个页面加一个 &lt;url&gt; 条目</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 4: JSON-LD -->
+        <div class="task" data-id="seo-4">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">添加 JSON-LD 结构化数据 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    结构化数据让 Google 理解你网站的商业模式（公司信息、产品信息），有机会获得搜索结果中的富摘要展示（星级评分、价格等）。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                    <button class="task-btn" onclick="toggleCode('code-jsonld')">查看内容</button>
+                </div>
+                <div class="code-block" id="code-jsonld">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>已添加两类 JSON-LD 结构化数据：
+
+1. Organization Schema（公司信息）
+   - 公司名称、地址、联系方式
+   - Logo URL
+   - 让 Google 知识图谱能识别你的公司
+
+2. Product Schema（产品信息）
+   - 产品名称、描述、图片
+   - 价格信息、库存状态
+   - 有机会在搜索结果展示富摘要
+
+💡 验证工具：https://search.google.com/test/rich-results
+💡 提交后约 1-2 周可能出现在搜索结果中</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 5: Open Graph -->
+        <div class="task" data-id="seo-5">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">添加 Open Graph / Twitter Card 标签 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    OG 标签控制在社交媒体分享时显示的标题、描述和图片。对 LinkedIn、Facebook 分享效果至关重要。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                    <button class="task-btn" onclick="toggleCode('code-og')">查看内容</button>
+                </div>
+                <div class="code-block" id="code-og">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>&lt;meta property="og:title" content="Yisiyang Trading Store | 3.5mm Mono Audio Cables"&gt;
+&lt;meta property="og:description" content="Professional manufacturer of 3.5mm mono audio cables..."&gt;
+&lt;meta property="og:image" content="https://www.yisiyang.com/images/D0FF971779CA1649E8BCEFCF0ABF0536.jpg"&gt;
+&lt;meta property="og:url" content="https://www.yisiyang.com/"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+
+💡 测试工具：https://developers.facebook.com/tools/debug/
+💡 测试工具：https://cards-dev.twitter.com/validator</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 6: Bing -->
+        <div class="task" data-id="seo-6">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">提交到 Bing Webmaster Tools <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    Bing 占全球搜索约 3-5%，且是 ChatGPT 搜索的数据来源。提交到 Bing = 同时被 AI 搜索引擎索引。
+                </div>
+                <div class="task-actions">
+                    <a href="https://www.bing.com/webmasters" target="_blank" class="task-btn primary">打开 Bing Webmaster</a>
+                    <button class="task-btn" onclick="toggleCode('code-bing')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-bing">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>步骤 1：打开 https://www.bing.com/webmasters
+步骤 2：用微软账号登录
+步骤 3：可以直接从 GSC 导入网站数据（最简单）
+        或者手动添加网站 → 选择 HTML 标签验证
+步骤 4：提交 sitemap.xml
+步骤 5：等待收录（通常比 Google 快）
+
+💡 Bing Webmaster 还可以直接提交 URL 加速收录
+💡 Bing 是 ChatGPT/Perplexity 等AI搜索引擎的数据来源之一</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 7: Canonical URL -->
+        <div class="task" data-id="seo-7">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">设置 Canonical URL <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    避免 yisiyang.com 和 www.yisiyang.com 被当成两个重复网站。指定 www 版本为规范地址。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task 8: Google Analytics -->
+        <div class="task" data-id="seo-8">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">安装 Google Analytics (GA4) <span class="priority low">P2 推荐</span></div>
+                <div class="task-desc">
+                    GA4 追踪网站访问量、用户来源、行为数据。帮助判断哪些渠道带来的流量最多。
+                </div>
+                <div class="task-actions">
+                    <a href="https://analytics.google.com/" target="_blank" class="task-btn primary">打开 GA4</a>
+                    <button class="task-btn" onclick="toggleCode('code-ga4')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-ga4">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>步骤 1：打开 https://analytics.google.com/
+步骤 2：创建账号 → 创建 GA4 资源
+步骤 3：输入网站 URL：https://www.yisiyang.com
+步骤 4：获取测量 ID（格式 G-XXXXXXXXXX）
+步骤 5：在 index.html 的 &lt;/head&gt; 前添加：
+
+&lt;!-- Google Analytics --&gt;
+&lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+&lt;/script&gt;
+
+步骤 6：重新部署网站
+步骤 7：24小时后可以在 GA4 看板看到数据</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== GEO PANEL ==================== -->
+<div class="panel" id="panel-geo">
+    <div class="task-group">
+        <div class="task-group-title"><span class="icon">🤖</span> GEO 优化 — 让 AI 搜索引擎也能找到你</div>
+
+        <div class="info-box">
+            <strong>GEO = Generative Engine Optimization</strong>，针对 ChatGPT、Perplexity、Google AI Overview 等 AI 搜索引擎的优化。AI 搜索引擎更看重内容的结构化、权威性和可引用性。
+        </div>
+
+        <!-- GEO Task 1 -->
+        <div class="task" data-id="geo-1">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">FAQ 结构化数据 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    AI 搜索引擎喜欢直接回答问题的内容。FAQ schema 让你的页面更容易被 AI 引用为答案来源。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                    <button class="task-btn" onclick="toggleCode('code-faq')">查看内容</button>
+                </div>
+                <div class="code-block" id="code-faq">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>已在页面底部添加 FAQ 区域，包含以下问题：
+
+Q: What is a 3.5mm mono cable used for?
+Q: What's the difference between mono and stereo 3.5mm cables?
+Q: Do you offer custom lengths and colors?
+Q: What is the minimum order quantity (MOQ)?
+Q: Do you provide samples before bulk orders?
+Q: What certifications do your cables have?
+
+💡 FAQ 直接回答用户常见问题
+💡 AI 搜索引擎倾向引用有明确 Q&A 格式的内容
+💡 未来可根据客户实际提问持续扩充</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- GEO Task 2 -->
+        <div class="task" data-id="geo-2">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">清晰的产品规格参数 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    AI 搜索引擎需要结构化的产品参数来理解和引用。用表格列出关键规格。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn green">✓ 已自动生成</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GEO Task 3 -->
+        <div class="task" data-id="geo-3">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">提交到 Perplexity / You.com <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    直接向 AI 搜索引擎提交你的网站，加速被发现。
+                </div>
+                <div class="task-actions">
+                    <a href="https://www.perplexity.ai/" target="_blank" class="task-btn primary">Perplexity</a>
+                    <button class="task-btn" onclick="toggleCode('code-perplexity')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-perplexity">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>方式 1：在 Perplexity 搜索你的网站
+  - 搜索 "yisiyang.com 3.5mm mono cable"
+  - Perplexity 会自动发现并索引
+
+方式 2：在 Perplexity 的 Discord 提交 URL
+  - Perplexity 官方 Discord: discord.gg/perplexity-ai
+
+方式 3：确保你的网站在 Bing 中已被索引
+  - Perplexity 部分依赖 Bing 索引
+  - 完成上面 Bing Webmaster 提交即可
+
+You.com:
+  - 在 You.com 搜索 "3.5mm mono cable manufacturer yisiyang"
+  - AI 搜索引擎主要通过爬虫自动发现内容
+  - 关键是确保内容质量高、结构清晰</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- GEO Task 4 -->
+        <div class="task" data-id="geo-4">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">建立外部权威信号 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    AI 搜索引擎倾向于引用有外部背书的内容。在行业平台、B2B 目录上列出你的网站。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-authority')">查看目录</button>
+                </div>
+                <div class="code-block" id="code-authority">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>推荐注册的 B2B / 行业目录：
+
+1. Alibaba.com（已有账号 ✅）
+   → 在公司简介中添加 www.yisiyang.com 链接
+
+2. Made-in-China.com
+   → 注册免费账号，添加公司网站链接
+
+3. GlobalSources.com
+   → 注册供应商账号
+
+4. Kompass.com
+   → 全球 B2B 企业目录
+
+5. ThomasNet.com（北美市场）
+   → 工业供应商目录
+
+6. Industry directories
+   → 在电子产品/线材行业目录中注册
+
+7. Google Business Profile
+   → https://business.google.com/
+   → 创建商家资料，添加网站链接
+
+💡 每个外部链接都是一个权威信号
+💡 优先注册免费平台，付费的暂不需要</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- GEO Task 5 -->
+        <div class="task" data-id="geo-5">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">内容可引用性优化 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    AI 搜索引擎偏好「可直接引用」的格式：定义句、对比表、步骤列表。避免营销性过强的表述。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-citable')">查看技巧</button>
+                </div>
+                <div class="code-block" id="code-citable">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>让内容对 AI 更「可引用」的写作技巧：
+
+❌ 营销写法：
+"We provide the best audio cables in the industry with
+unmatched quality and competitive pricing!"
+
+✅ 可引用写法：
+"3.5mm mono audio cables are primarily used for
+single-channel audio signal transmission in professional
+audio equipment, public address systems, and
+telecommunications devices."
+
+关键技巧：
+1. 每段开头给出直接定义或结论
+2. 用数据说话："22AWG wire gauge, nickel-plated connectors"
+3. 用对比表："Mono vs Stereo comparison table"
+4. 用编号列表："3 steps to order"
+5. 加引用来源："According to IEC 60268 standard..."
+
+💡 未来写文章时，每个段落都问自己：
+   "如果 AI 要引用这句话，它够清晰、够事实吗？"</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SOCIAL PANEL ==================== -->
+<div class="panel" id="panel-social">
+    <div class="task-group">
+        <div class="task-group-title"><span class="icon">📢</span> 社媒引流 — LinkedIn / Facebook 挂上你的网站</div>
+
+        <div class="info-box warning">
+            <strong>注意：</strong>社媒是免费的流量入口，但关键是持续更新。建议每天花 15-30 分钟，不需要太多，但要稳定。
+        </div>
+
+        <!-- Social Task 1 -->
+        <div class="task" data-id="social-1">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">创建 LinkedIn 公司页面 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    LinkedIn 是 B2B 获客最重要的平台。全球采购经理最常在 LinkedIn 寻找供应商。
+                </div>
+                <div class="task-actions">
+                    <a href="https://www.linkedin.com/company/setup/new/" target="_blank" class="task-btn primary">创建公司页面</a>
+                    <button class="task-btn" onclick="toggleCode('code-linkedin')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-linkedin">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>步骤 1：用你的个人 LinkedIn 账号登录
+步骤 2：右上角 → 「以公司名义创建」→ 「创建公司页面」
+步骤 3：填写公司信息：
+  - 公司名称：Yisiyang Trading Store
+  - URL：yisiyang-trading-store（自定义部分）
+  - 网站：https://www.yisiyang.com
+  - 行业：Electronics / Manufacturing
+  - 公司规模：1-10人
+  - 公司类型：Trading Company
+步骤 4：上传公司 Logo 和横幅图
+步骤 5：在「关于」中写 2-3 句话介绍，加关键词
+步骤 6：发布第一条动态（产品介绍 + 网站链接）
+
+💡 没有个人 LinkedIn 账号？先注册一个
+💡 公司名称要和网站一致，方便客户搜索</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Task 2 -->
+        <div class="task" data-id="social-2">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">创建 Facebook 商业主页 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    Facebook 商业主页可以展示产品、接收询盘消息，也是社媒信任的基础设施。
+                </div>
+                <div class="task-actions">
+                    <a href="https://www.facebook.com/pages/create" target="_blank" class="task-btn primary">创建主页</a>
+                    <button class="task-btn" onclick="toggleCode('code-facebook')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-facebook">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>步骤 1：登录 Facebook → 左侧菜单 → 「主页」→ 「创建新主页」
+步骤 2：选择「商家或品牌」
+步骤 3：填写信息：
+  - 主页名称：Yisiyang Trading Store
+  - 类别：Electronics Manufacturer / Trading Company
+  - 简介：Professional manufacturer of 3.5mm audio cables
+  - 网站：https://www.yisiyang.com
+  - 邮箱：start2star@outlook.com
+  - 电话：+86 15013791919
+步骤 4：上传 Logo 和封面图
+步骤 5：发布 3 条初始内容：
+  - 产品介绍贴（带图片 + 网站链接）
+  - 公司介绍贴
+  - 工厂/产品实拍贴
+
+💡 开启 Messenger 功能，让客户可以直接发消息
+💡 加入相关的 B2B/外贸 Facebook 群组</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Task 3 -->
+        <div class="task" data-id="social-3">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">在阿里国际站店铺添加网站链接 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    阿里国际站是高权重平台，从那里引流到独立站效果最好。在公司简介中添加 yisiyang.com 链接。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-alibaba')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-alibaba">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>在阿里国际站添加网站链接的方式：
+
+1. 公司简介页面
+   → 登录卖家后台 → 公司信息 → 公司简介
+   → 在简介中添加 "Visit our website: www.yisiyang.com"
+   → 部分位置支持直接添加 URL
+
+2. 产品详情页
+   → 在产品描述末尾添加：
+   "For more products and custom options, visit:
+    www.yisiyang.com"
+
+3. 联系方式
+   → 公司信息 → 联系方式
+   → 添加公司网站字段
+
+⚠️ 注意：阿里可能限制外链，注意平台规则
+💡 可以用文字描述引导，如 "Search Yisiyang Trading Store online"</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Task 4 -->
+        <div class="task" data-id="social-4">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">社媒内容日历 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    制定简单的发布计划，确保持续输出。不要求大量内容，关键是持续。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-calendar')">查看日历</button>
+                </div>
+                <div class="code-block" id="code-calendar">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>每周最低发布计划（约 30 分钟/天）：
+
+周一：产品展示帖
+  - 产品图片 + 简短规格 + 网站链接
+  - 例："Our 3.5mm mono extension cables feature
+    22AWG wire, nickel-plated connectors. MOQ 500pcs.
+    www.yisiyang.com"
+
+周三：行业知识帖
+  - 分享一个小知识点 + 你的专业判断
+  - 例："Mono vs Stereo cables: when to choose mono?
+    For single-channel PA systems and telecom devices,
+    mono is the standard choice. #AudioCables"
+
+周五：互动帖
+  - 提问 / 投票 / 求反馈
+  - 例："What's your preferred cable length for audio
+    extension? 1m / 3m / 5m / Custom?"
+
+LinkedIn 标签建议：
+  #AudioCables #CableManufacturer #B2BChina
+  #OEMCables #ElectronicsManufacturing
+  #ShenzhenSupplier #CableAssembly
+
+Facebook 标签建议：
+  同上 + #WholesaleElectronics #FactoryDirect
+
+💡 用 Canva 免费版做简单图文
+💡 内容可以复用到 LinkedIn + Facebook 两个平台</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Task 5 -->
+        <div class="task" data-id="social-5">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">WhatsApp Business 设置 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    很多海外客户习惯用 WhatsApp 沟通。WhatsApp Business 可以设置自动回复和产品目录。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-whatsapp')">查看步骤</button>
+                </div>
+                <div class="code-block" id="code-whatsapp">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>步骤 1：下载 WhatsApp Business App（手机应用商店搜索）
+步骤 2：用 +86 15013791919 注册
+步骤 3：设置商家信息：
+  - 名称：Yisiyang Trading Store
+  - 类别：Electronics
+  - 地址：深圳福田
+  - 网站：www.yisiyang.com
+  - 邮箱：start2star@outlook.com
+步骤 4：设置自动回复：
+  - 离开时："Thank you for contacting Yisiyang Trading Store.
+    We'll reply within 24 hours. Meanwhile, visit
+    www.yisiyang.com for our product catalog."
+  - 问候语："Hello! How can we help you today? We specialize
+    in 3.5mm audio cables and custom assemblies."
+步骤 5：创建产品目录：
+  - 上传 3 张产品图 + 名称 + 价格区间
+  - 客户可以直接在 WhatsApp 里浏览你的产品
+
+💡 WhatsApp Business 和普通 WhatsApp 可以同时装
+💡 自动回复确保客户不会因为时差等太久</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Task 6 -->
+        <div class="task" data-id="social-6">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">YouTube 产品视频 <span class="priority low">P2 推荐</span></div>
+                <div class="task-desc">
+                    YouTube 是全球第二大搜索引擎，产品演示视频能带来长期被动流量。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-youtube')">查看建议</button>
+                </div>
+                <div class="code-block" id="code-youtube">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>YouTube 视频建议（优先级较低，后续再做）：
+
+1. 产品展示视频（30-60秒）
+   - 手机拍摄即可，展示产品实物
+   - 标题："3.5mm Mono Audio Extension Cable - Yisiyang Trading"
+   - 描述中添加网站链接
+
+2. 产品对比视频
+   - "Mono vs Stereo 3.5mm Cable - Which One Do You Need?"
+   - 这种知识性视频更容易获得搜索流量
+
+3. 工厂/生产过程
+   - 展示生产环境，增加信任感
+
+💡 标题和描述用英文，加关键词
+💡 视频描述区加网站链接
+💡 前期用手机拍就行，不需要专业设备</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== CONTENT PANEL ==================== -->
+<div class="panel" id="panel-content">
+    <div class="task-group">
+        <div class="task-group-title"><span class="icon">📝</span> 内容扩充 — 更多产品、文章、案例</div>
+
+        <div class="info-box">
+            <strong>核心逻辑：</strong>网站内容越多，被搜索到的机会越大。每多一个页面 = 多一个入口。但质量优先，不要凑数。
+        </div>
+
+        <!-- Content Task 1 -->
+        <div class="task" data-id="content-1">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">添加更多产品页面 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    当前只有 3.5mm 单声道线材。扩展产品线页面，覆盖更多搜索关键词。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-products')">查看建议</button>
+                </div>
+                <div class="code-block" id="code-products">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>建议添加的产品页面：
+
+1. /products/3.5mm-stereo-cable.html
+   3.5mm 立体声音频线（扩展产品线）
+
+2. /products/6.35mm-audio-cable.html
+   6.35mm 大三芯/大二芯音频线
+
+3. /products/rca-audio-cable.html
+   RCA 莲花头音频线
+
+4. /products/speaker-cable.html
+   喇叭线/音箱线
+
+5. /products/custom-cable-assembly.html
+   定制线束组装服务
+
+每个产品页面应包含：
+  - 产品名称 + 型号
+  - 详细规格参数表
+  - 3-5 张产品图
+  - 应用场景描述
+  - FAQ（3-5个问题）
+  - 联系询盘按钮
+
+💡 每个产品页都是一个新的 SEO 入口
+💡 关键词：[产品名] + manufacturer/supplier/wholesale/OEM</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Task 2 -->
+        <div class="task" data-id="content-2">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">添加行业知识文章 <span class="priority high">P0 必须</span></div>
+                <div class="task-desc">
+                    文章页是 SEO 流量的核心来源。客户搜索问题时找到你的文章 → 认识你的公司 → 发询盘。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-articles')">查看文章计划</button>
+                </div>
+                <div class="code-block" id="code-articles">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>优先写的 5 篇文章：
+
+1. /blog/mono-vs-stereo-cable.html
+   "Mono vs Stereo 3.5mm Cable: Complete Guide"
+   搜索量：高 | 竞争度：中
+
+2. /blog/3.5mm-cable-buying-guide.html
+   "3.5mm Audio Cable Buying Guide: What to Look For"
+   搜索量：中高 | 竞争度：低
+
+3. /blog/audio-cable-specifications.html
+   "Understanding Audio Cable Specifications: AWG,
+    Shielding, and Connectors"
+   搜索量：中 | 竞争度：低
+
+4. /blog/oem-cable-manufacturing.html
+   "OEM Cable Manufacturing: How to Work with
+    a Chinese Supplier"
+   搜索量：中 | 竞争度：低
+
+5. /blog/audio-extension-cable-troubleshooting.html
+   "Common Audio Extension Cable Issues and Solutions"
+   搜索量：中 | 竞争度：低
+
+文章结构模板：
+  - 标题：包含目标关键词
+  - 导言：2-3句直接回答问题
+  - 正文：分段 + 小标题 + 要点列表
+  - 对比表：如果有对比需求
+  - FAQ：3-5个常见问题
+  - CTA：联系询盘
+
+💡 每篇 800-1500 字英文
+💡 可以用 AI 辅助写作，但必须人工润色
+💡 每篇文章都是一个 SEO 流量入口</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Task 3 -->
+        <div class="task" data-id="content-3">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">添加客户案例 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    案例页建立信任，展示你服务过真实客户。新客户最关心"别人用得怎么样"。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-cases')">查看模板</button>
+                </div>
+                <div class="code-block" id="code-cases">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>案例页模板：
+
+/cases/european-audio-distributor.html
+标题："Case Study: How We Helped a European Audio
+       Distributor Save 30% on Cable Costs"
+
+内容结构：
+  1. 客户背景（匿名化）
+     "A mid-size audio equipment distributor based in
+      Germany, specializing in PA systems..."
+
+  2. 客户需求
+     "Needed a reliable supplier for 3.5mm mono
+      extension cables with custom branding..."
+
+  3. 解决方案
+     "Provided OEM service with custom packaging,
+      22AWG wire upgrade, and quarterly delivery schedule..."
+
+  4. 结果
+     "Reduced cable costs by 30%, improved delivery
+      reliability to 98% on-time..."
+
+  5. 客户评价（引用）
+     "Yisiyang delivered exactly what we needed..."
+
+💡 即使没有真实案例，也可以写通用场景
+💡 关键是展示解决问题的能力和流程
+💡 2-3 个案例就够了</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Task 4 -->
+        <div class="task" data-id="content-4">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">添加 About Us 详细页面 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    About 页面是建立公司可信度的关键页面。采购商在发询盘前一定会看 About Us。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-about')">查看建议</button>
+                </div>
+                <div class="code-block" id="code-about">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>About Us 页面建议内容：
+
+/about.html
+
+1. 公司故事
+   - 成立背景、专注领域
+   - 核心优势（3-4个要点）
+
+2. 产能与资质
+   - 月产能 / 产线数量
+   - ISO / RoHS / CE 等认证
+   - 质检流程
+
+3. 团队介绍
+   - 不需要放照片
+   - 强调团队经验：10+ years in audio cable industry
+
+4. 服务承诺
+   - 质保政策
+   - 交货时间
+   - 售后支持
+
+5. 联系方式（重复，方便客户直接联系）
+
+💡 About 页面是信任建立的关键
+💡 真实 > 华丽，不要过度包装
+💡 未来可以考虑加工厂实拍图</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Task 5 -->
+        <div class="task" data-id="content-5">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">导航与多页面架构 <span class="priority medium">P1 重要</span></div>
+                <div class="task-desc">
+                    当前是单页网站，需要拆分为多页面架构以支持更多内容和更好的 SEO。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-structure')">查看架构</button>
+                </div>
+                <div class="code-block" id="code-structure">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>建议的网站架构：
+
+yisiyang.com/
+├── index.html              首页（保持现有，优化为概览）
+├── about.html              关于我们
+├── products/
+│   ├── index.html          产品列表页
+│   ├── 3.5mm-mono-cable.html
+│   ├── 3.5mm-stereo-cable.html
+│   ├── 6.35mm-audio-cable.html
+│   ├── rca-cable.html
+│   └── custom-assembly.html
+├── blog/
+│   ├── index.html          博客列表
+│   ├── mono-vs-stereo.html
+│   └── buying-guide.html
+├── cases/
+│   └── index.html          案例列表
+├── contact.html            联系我们
+├── sitemap.xml             站点地图
+├── robots.txt              爬虫规则
+└── images/                 图片资源
+
+导航栏更新：
+  Home | Products ▾ | About | Blog | Contact
+
+💡 每个页面独立 URL = 更多 SEO 入口
+💡 用同样的设计风格保持一致
+💡 部署时每个文件都要上传到 Cloudflare</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Task 6 -->
+        <div class="task" data-id="content-6">
+            <div class="task-check" onclick="toggleTask(this)"></div>
+            <div class="task-content">
+                <div class="task-title">持续更新计划 <span class="priority low">P2 推荐</span></div>
+                <div class="task-desc">
+                    SEO 的核心是持续更新。制定一个可持续的更新节奏比一次做很多更重要。
+                </div>
+                <div class="task-actions">
+                    <button class="task-btn" onclick="toggleCode('code-schedule')">查看计划</button>
+                </div>
+                <div class="code-block" id="code-schedule">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<pre>可持续的更新节奏：
+
+第 1-2 周（基础设施）：
+  ✅ GSC 提交 + sitemap + robots.txt
+  ✅ LinkedIn + Facebook 页面创建
+  ✅ WhatsApp Business 设置
+
+第 3-4 周（内容起步）：
+  📝 写第 1 篇文章（Mono vs Stereo）
+  📝 添加 2 个新产品页面
+  📢 LinkedIn/Facebook 各发 3 条内容
+
+第 5-8 周（内容加速）：
+  📝 每周 1 篇文章
+  📝 添加更多产品页面
+  📝 添加 1-2 个案例
+  📢 社媒保持每周 3 条
+
+第 9-12 周（优化迭代）：
+  📊 查看 GSC 数据，了解哪些词带来流量
+  📝 优化表现好的页面
+  📝 继续写新文章
+  📢 尝试 LinkedIn 广告（$5-10/天测试）
+
+关键原则：
+  1. 每周至少更新一次网站内容
+  2. 社媒每天至少发一条
+  3. 根据数据调整方向
+  4. 不要追求完美，先发再改</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+});
+
+// Toggle task completion
+function toggleTask(el) {
+    el.classList.toggle('done');
+    const content = el.nextElementSibling;
+    content.classList.toggle('done-text');
+    updateProgress();
+    saveState();
+}
+
+// Update progress
+function updateProgress() {
+    const all = document.querySelectorAll('.task-check');
+    const done = document.querySelectorAll('.task-check.done');
+    const total = all.length;
+    const count = done.length;
+    const pct = total ? Math.round(count / total * 100) : 0;
+
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = count;
+    document.getElementById('progressTotal').textContent = total;
+
+    // Update tab counts
+    ['seo', 'geo', 'social', 'content'].forEach(tab => {
+        const panel = document.getElementById('panel-' + tab);
+        const tabDone = panel.querySelectorAll('.task-check.done').length;
+        const tabTotal = panel.querySelectorAll('.task-check').length;
+        document.getElementById(tab + 'Count').textContent = tabDone + '/' + tabTotal;
+    });
+}
+
+// Toggle code blocks
+function toggleCode(id) {
+    document.getElementById(id).classList.toggle('show');
+}
+
+// Copy code
+function copyCode(btn) {
+    const block = btn.parentElement;
+    const pre = block.querySelector('pre');
+    const text = pre.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = '复制', 1500);
+    });
+}
+
+// Save/Load state to localStorage
+function saveState() {
+    const states = {};
+    document.querySelectorAll('.task').forEach(task => {
+        const check = task.querySelector('.task-check');
+        states[task.dataset.id] = check.classList.contains('done');
+    });
+    localStorage.setItem('yisiyang_dashboard_state', JSON.stringify(states));
+}
+
+function loadState() {
+    try {
+        const saved = JSON.parse(localStorage.getItem('yisiyang_dashboard_state'));
+        if (!saved) return;
+        document.querySelectorAll('.task').forEach(task => {
+            if (saved[task.dataset.id]) {
+                const check = task.querySelector('.task-check');
+                check.classList.add('done');
+                check.nextElementSibling.classList.add('done-text');
+            }
+        });
+    } catch(e) {}
+}
+
+// Init
+loadState();
+updateProgress();
+</script>
+
+</body>
+</html>
