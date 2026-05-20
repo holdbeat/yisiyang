@@ -1,0 +1,9 @@
+# robots.txt for yisiyang.com
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.yisiyang.com/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
